@@ -1,0 +1,37 @@
+{
+    "name": "sygus-lang",
+    "displayName": "SyGuS Lang",
+    "description": "Syntax Highlighting for SyGuS Lib v2. language.",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.56.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "sl",
+                "aliases": [
+                    "SyGuS",
+                    "sl"
+                ],
+                "extensions": [
+                    ".sl"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "sl",
+                "scopeName": "source.sl",
+                "path": "./syntaxes/sl.tmLanguage.json"
+            }
+        ]
+    },
+    "dependencies": {
+        "js-yaml": "^4.1.0"
+    }
+}

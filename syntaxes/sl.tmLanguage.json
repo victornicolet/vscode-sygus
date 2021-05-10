@@ -1,0 +1,737 @@
+{
+  "scopeName": "source.sl",
+  "patterns": [
+    {
+      "include": "#comments"
+    },
+    {
+      "include": "#commands"
+    }
+  ],
+  "repository": {
+    "comments": {
+      "name": "comment.sl",
+      "match": ";.*$"
+    },
+    "reserved": {
+      "name": "constant.language.sl",
+      "match": "\\b(par|STRING|DECIMAL|NUMERAL|_|as|let|forall|exists|is)\\b|!"
+    },
+    "numerals": {
+      "name": "constant.numeric.sl",
+      "match": "\\b(0|[1-9][0-9]*)\\b"
+    },
+    "consts": {
+      "patterns": [
+        {
+          "comment": "Decimals.",
+          "name": "constant.numeric.sl",
+          "match": "\\b(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)"
+        },
+        {
+          "include": "#numerals"
+        },
+        {
+          "comment": "Hexadecimals.",
+          "name": "constant.numeric.sl",
+          "match": "#x\\h+"
+        },
+        {
+          "comment": "Binarys.",
+          "name": "constant.numeric.sl",
+          "match": "#b(0|1)+"
+        },
+        {
+          "comment": "String literals.",
+          "name": "constant.other.sl",
+          "match": "\\\"(\\\\\\\"|[^\\\"])*\\\""
+        }
+      ]
+    },
+    "convenienceSymbols": {
+      "patterns": [
+        {
+          "comment": "Propositional and =.",
+          "name": "keyword.other.sl",
+          "match": "(\\b(true|false|and|or|ite|not)\\b)|((=>|=)\\s)"
+        },
+        {
+          "comment": "Arithmetic.",
+          "name": "keyword.operator.sl",
+          "match": "(>=|<=|[=<>\\+\\-\\*\\\\])\\s"
+        },
+        {
+          "comment": "Primitive types.",
+          "name": "support.type.sl",
+          "match": "\\b(Bool|Int|Real)\\b"
+        }
+      ]
+    },
+    "simpleSymbols": {
+      "patterns": [
+        {
+          "match": "[~@\\$%\\^&\\*\\-\\+=<>\\.\\?/][~!@\\$%\\^&\\*\\-\\+=<>\\.\\?/\\w]*"
+        },
+        {
+          "comment": "Word separator if starting by alpha.",
+          "match": "\\b[a-zA-Z][~!@\\$%\\^&\\*\\-\\+=<>\\.\\?/\\w]*"
+        },
+        {
+          "comment": "_ and ! are reserved.",
+          "match": "[!_][~!@\\$%\\^&\\*\\-\\+=<>\\.\\?/\\w]+"
+        }
+      ]
+    },
+    "quotedSymbols": {
+      "begin": "(\\|)",
+      "beginCaptures": {
+        "0": {
+          "name": "constant.numeric.sl"
+        }
+      },
+      "end": "(\\|)",
+      "endCaptures": {
+        "0": {
+          "name": "constant.numeric.sl"
+        }
+      },
+      "patterns": [
+        {
+          "comment": "Highlight backslash because illegal.",
+          "name": "invalid.sl",
+          "match": "\\\\"
+        }
+      ]
+    },
+    "keywords": {
+      "name": "keyword.sl",
+      "match": ":[\\w~!@\\$%\\^&\\*\\-\\+=<>\\.\\?/]+"
+    },
+    "indexed": {
+      "comment": "Indexing on quoted.",
+      "begin": "(\\()\\s*(_)\\b",
+      "beginCaptures": {
+        "1": {
+          "name": "keyword.sl"
+        },
+        "2": {
+          "name": "constant.numeric.sl"
+        }
+      },
+      "end": "((([1-9][0-9]*)\\s*)+)(\\))|(\\))",
+      "endCaptures": {
+        "1": {
+          "name": "constant.other.sl"
+        },
+        "4": {
+          "name": "keyword.sl"
+        },
+        "5": {
+          "name": "keyword.sl"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#simpleSymbols"
+        },
+        {
+          "include": "#quotedSymbols"
+        }
+      ]
+    },
+    "terms": {
+      "patterns": [
+        {
+          "include": "#consts"
+        },
+        {
+          "include": "#convenienceSymbols"
+        },
+        {
+          "include": "#simpleSymbols"
+        },
+        {
+          "include": "#quotedSymbols"
+        },
+        {
+          "include": "#indexed"
+        },
+        {
+          "begin": "\\(",
+          "end": "\\)",
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#reserved"
+            },
+            {
+              "include": "#terms"
+            },
+            {
+              "comment": "For annotations.",
+              "include": "#keywords"
+            },
+            {
+              "name": "invalid.sl",
+              "match": "[^\\s\\)]"
+            }
+          ]
+        }
+      ]
+    },
+    "commands": {
+      "patterns": [
+        {
+          "begin": "(\\()\\s*(set-logic)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#simpleSymbols"
+            },
+            {
+              "include": "#quotedSymbols"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(set-option)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#terms"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(set-info)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(declare-sort)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#simpleSymbols"
+            },
+            {
+              "include": "#quotedSymbols"
+            },
+            {
+              "include": "#numerals"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(define-sort)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#terms"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(declare-fun|declare-const|declare-var)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            },
+            {
+              "include": "#terms"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(define-fun-rec|define-funs-rec|define-fun|define-cons)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "storage.type.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#terms"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(synth-fun|synth-inv)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.class.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#terms"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(declare-datatypes|declare-datatype)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#terms"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(push)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "storage.modifier.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#numerals"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(pop)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "storage.modifier.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#numerals"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(assert|eval|constraint|inv-constraint)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#terms"
+            },
+            {
+              "include": "#comments"
+            }
+          ],
+          "contentName": "meta.entity.name.function"
+        },
+        {
+          "begin": "(\\()\\s*(check-sat-assuming|check-sat|check-synth)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#terms"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(get-assertions)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          }
+        },
+        {
+          "begin": "(\\()\\s*(get-proof)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "support.function.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          }
+        },
+        {
+          "begin": "(\\()\\s*(exit)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "storage.modifier.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          }
+        },
+        {
+          "begin": "(\\()\\s*(reset)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "storage.modifier.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          }
+        },
+        {
+          "begin": "(\\()\\s*(get-unsat-core)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          }
+        },
+        {
+          "begin": "(\\()\\s*(get-value)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#terms"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(get-assignment)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          }
+        },
+        {
+          "begin": "(\\()\\s*(get-model)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          }
+        },
+        {
+          "begin": "(\\()\\s*(get-option)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(get-info)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "entity.name.tag.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#comments"
+            }
+          ]
+        },
+        {
+          "begin": "(\\()\\s*(echo)",
+          "beginCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            },
+            "2": {
+              "name": "storage.modifier.sl"
+            }
+          },
+          "end": "(\\))",
+          "endCaptures": {
+            "1": {
+              "name": "keyword.sl"
+            }
+          },
+          "patterns": [
+            {
+              "include": "#comments"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
