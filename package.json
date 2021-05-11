@@ -2,7 +2,7 @@
     "name": "sygus-lang",
     "displayName": "SyGuS Lang",
     "description": "Syntax Highlighting for SyGuS Lib v2. language.",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "icon": "images/vscode-sygus_128.png",
     "publisher": "victornicolet",
     "repository": {
@@ -13,7 +13,8 @@
         "vscode": "^1.56.0"
     },
     "categories": [
-        "Programming Languages"
+        "Programming Languages",
+        "Snippets"
     ],
     "contributes": {
         "languages": [
@@ -34,6 +35,12 @@
                 "language": "sl",
                 "scopeName": "source.sl",
                 "path": "./syntaxes/sl.tmLanguage.json"
+            }
+        ],
+        "snippets": [
+            {
+                "language": "sl",
+                "path": "./snippets/basic.json"
             }
         ]
     },

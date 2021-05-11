@@ -4,4 +4,6 @@ This is a small extension for editing syntax-guided synthesis (SyGuS) problems w
 
 ## Features
 
-The extension only provides basic syntax highlighting. More features will be added.
+The extension provides basic features of SyGuS-IF:
+- syntax highlighting.
+- snippets for all standard commands.

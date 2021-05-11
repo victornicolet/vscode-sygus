@@ -1,0 +1,158 @@
+{
+    "Check Synth": {
+        "prefix": [
+            "check-synth"
+        ],
+        "body": [
+            "check-synth"
+        ]
+    },
+    "Add constraint": {
+        "prefix": [
+            "constraint"
+        ],
+        "body": [
+            "constraint ${1:bool-expr}"
+        ]
+    },
+    "Define Constant": {
+        "prefix": [
+            "define-const"
+        ],
+        "body": [
+            "define-const ${1:name} ${2:Sort} ${3:value}"
+        ]
+    },
+    "Define Function": {
+        "prefix": [
+            "define-fun"
+        ],
+        "body": [
+            "define-fun ${1:f} (${2:(x Sort)}) ${3:Int}",
+            "\t${4:body}",
+            ""
+        ]
+    },
+    "Define Sort": {
+        "prefix": [
+            "define-sort"
+        ],
+        "body": [
+            "define-sort ${1:name} (${2:sort-variables}) ${3:sort}"
+        ]
+    },
+    "Declare Constant": {
+        "prefix": [
+            "declare-const"
+        ],
+        "body": [
+            "declare-const ${1:name} ${2:Sort}"
+        ]
+    },
+    "Declare Datatype": {
+        "prefix": [
+            "declare-datatype"
+        ],
+        "body": [
+            "declare-datatype ${1:name} ${2:datatype}"
+        ]
+    },
+    "Declare Datatypes": {
+        "prefix": [
+            "declare-datatypes"
+        ],
+        "body": [
+            "declare-datatypes (${1:names..}) (${2:datatypes})"
+        ]
+    },
+    "Declare Sort": {
+        "prefix": [
+            "declare-sort"
+        ],
+        "body": [
+            "declare-sort ${1:name} ${2:arity}"
+        ]
+    },
+    "Declare Variable": {
+        "prefix": [
+            "declare-var"
+        ],
+        "body": [
+            "declare-var ${1:name} ${2:Sort}"
+        ]
+    },
+    "If-Then-Else": {
+        "prefix": [
+            "ite"
+        ],
+        "body": [
+            "ite ${1:cond} ${2:b-true} ${3:b-false}"
+        ]
+    },
+    "Invariant Constraint": {
+        "prefix": [
+            "inv-constraint"
+        ],
+        "body": [
+            "inv-constraint ${1:s} ${2:s-pre} ${3:s-trans} ${4:s-post}"
+        ]
+    },
+    "Set Feature": {
+        "prefix": [
+            "set-feature"
+        ],
+        "body": [
+            "set-feature :${1:feature} ${2:true}"
+        ]
+    },
+    "Set Info": {
+        "prefix": [
+            "set-info"
+        ],
+        "body": [
+            "set-info :${1:info-flag} ${2:value}"
+        ]
+    },
+    "Set Logic": {
+        "prefix": [
+            "set-logic"
+        ],
+        "body": [
+            "set-logic ${0:DTLIA}"
+        ]
+    },
+    "Set Option": {
+        "prefix": [
+            "set-option"
+        ],
+        "body": [
+            "set-option :${1:option} ${2:value}"
+        ]
+    },
+    "Synthesize Function": {
+        "prefix": [
+            "synth-fun"
+        ],
+        "body": [
+            "synth-fun ${1:name} (${2:args}) ${3:Sort}",
+            "\t;;Non terminals of the grammar",
+            "\t(${4:(I Int) (B Bool) ...})",
+            "\t;;Define the grammar",
+            "\t(${5:(I Int (...)) (B Bool (...))})",
+            ""
+        ]
+    },
+    "Synthesize Invariant": {
+        "prefix": [
+            "synth-inv"
+        ],
+        "body": [
+            "synth-inv ${1:name} (${2:args})",
+            "\t;;Non terminals of the grammar",
+            "\t(${4:(I Int) (B Bool) ...})",
+            "\t;;Define the grammar",
+            "\t(${5:(I Int (...)) (B Bool (...))})",
+            ""
+        ]
+    }
+}

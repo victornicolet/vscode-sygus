@@ -1,35 +1,29 @@
 (set-logic DTLIA)
 
-(define-fun zero ((x Int)) Int (+ 0 #x0))
-(define-fun max ((x Int) (y Int)) Int (ite (>= x y) x y))
+(define-fun max ((x Int) (y Int)) Int
+    (ite (>= x y) x y)
+)
 
-(synth-fun join1_0 ((x59 Int) (x60 Int) (x61 Int) (x62 Int) (x63 Int)) Int ((Ix Int) (Ic Int))
- ((Ix Int (Ic x59 x60 x61 x62 x63 (- Ix) (+ Ix Ix) (max Ix Ix))) (Ic Int ((Constant Int)))))
+(define-fun min ((x Int) (y Int)) Int
+    (ite (<= x y) x y)
+)
 
-(synth-fun join1_1 ((x59 Int) (x60 Int) (x61 Int) (x62 Int) (x63 Int)) Int ((Ix Int) (Ic Int))
- ((Ix Int (Ic x59 x60 x61 x62 x63 (- Ix) (+ Ix Ix) (max Ix Ix))) (Ic Int ((Constant Int)))))
+(define-const x Int 0)
+(define-const y Int 1)
 
-(declare-var n Int)
-(declare-var n3 Int)
-(declare-var i1 Int)
-(declare-var i2 Int)
+(synth-fun f ((x Int) (y Int)) Int
+    ;;Non terminals of the grammar
+    ((I Int) (B Bool))
+    ;;Define the grammar
+    ((I Int (x y 0 1 (ite B I I))) (B Bool ((>= x y) (<= x y))))
+)
 
-(constraint
-  (or (not (>= i1 (- 0)))
-  (=
-    (max (+ i1 n) (- 0))
-    (join1_0 n i1 i2 (- 0) 0))))
+(define-sort Ifht () Int)
 
-(constraint
- (or (not (>= i1 (- 0)))
-  (=
-    (max (+ (max (+ i1 n) (- 0)) n3) (- 0))
-    (join1_0 n i1 i2 (max n3 (- 0)) n3))))
+(declare-var x3 Int)
+(declare-const x1 Int)
+(declare-const x2 Int)
 
-(constraint
- (or (not (>= i1 (- 0)))
-  (=
-    n3
-    (join1_1 n i1 i2 (max n3 (- 0)) n3))))
 
-(check-synth)
+(constraint (= (max x1 x2) (f x1 x2)))
+
