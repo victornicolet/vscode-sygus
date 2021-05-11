@@ -2,7 +2,13 @@
     "name": "sygus-lang",
     "displayName": "SyGuS Lang",
     "description": "Syntax Highlighting for SyGuS Lib v2. language.",
-    "version": "0.0.1",
+    "version": "0.1.0",
+    "icon": "images/vscode-sygus_128.png",
+    "publisher": "victornicolet",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/victornicolet/vscode-sygus.git"
+    },
     "engines": {
         "vscode": "^1.56.0"
     },
