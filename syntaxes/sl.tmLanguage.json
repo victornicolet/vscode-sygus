@@ -44,7 +44,7 @@
         {
           "comment": "String literals.",
           "name": "constant.other.sl",
-          "match": "\\\"(\\\\\\\"|[^\\\"])*\\\""
+          "match": "\\\"(\\\"\\\"|[^\\\"])*\\\""
         }
       ]
     },
@@ -256,6 +256,12 @@
             }
           },
           "patterns": [
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#consts"
+            },
             {
               "include": "#comments"
             }
